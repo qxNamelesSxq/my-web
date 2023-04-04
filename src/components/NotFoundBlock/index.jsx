@@ -7,10 +7,10 @@ const NotFoundBlock = () => {
     <div className={styles.root}>
       <h1>
         <span> ☹</span>
-        <br /> Ничего не найдено
+        <br /> Nothing found
       </h1>
       <p className={styles.description}>
-        К сожелению информация о данной страниче отсутсвует
+        Unfortunately, there is no information about this page
       </p>
     </div>
   );

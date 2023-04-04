@@ -9,7 +9,7 @@ function PizzaBlock({ title, price, imageUrl, sizes, types }) {
   //   setPizzaCount(pizzaCount + 1);
   // };
 
-  const typeNames = ["тонкое", "традиционное"];
+  const typeNames = ["subtle", "traditional"];
 
   return (
     <div className="pizza-block-wrapper">
@@ -58,7 +58,7 @@ function PizzaBlock({ title, price, imageUrl, sizes, types }) {
                 fill="white"
               />
             </svg>
-            <span>Добавить</span>
+            <span>Add</span>
             <i>0</i>
           </button>
         </div>

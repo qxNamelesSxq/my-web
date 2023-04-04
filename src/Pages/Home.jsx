@@ -1,17 +1,29 @@
 import React from "react";
+import qs from "qs";
 import Categories from "../components/Categories";
-import Sort from "../components/Sort";
+import Sort, { nameSort } from "../components/Sort";
 import PizzaBlock from "../components/PizzaBlock";
 import Skeleton from "../components/PizzaBlock/Skeleton";
 import Pagination from "../components/Pagination";
 import { SearchContext } from "../App";
+import { useNavigate } from "react-router-dom";
 
 import axios from "axios";
 
 import { useSelector, useDispatch } from "react-redux";
-import { setCategoryId, setCurrentPage } from "../redux/slices/filterSlice";
+import {
+  setCategoryId,
+  setCurrentPage,
+  setFilters,
+} from "../redux/slices/filterSlice";
 const Home = () => {
+  const navigate = useNavigate();
+
   const dispatch = useDispatch();
+
+  const isSearch = React.useRef(false);
+  const isMounted = React.useRef(false);
+
   const { categoryId, sort, currentPage } = useSelector(
     (state) => state.filterSlice
   );
@@ -20,12 +32,6 @@ const Home = () => {
   const { searchValue } = React.useContext(SearchContext);
   const [items, setItems] = React.useState([]);
   const [isLoading, setIsLoading] = React.useState(true);
-  // const [currentPage, setCurrentPage] = React.useState(1);
-
-  // const [sortType, setSortType] = React.useState({
-  //   name: "популярности",
-  //   sortProperty: "rating",
-  // });
 
   const onChangeCategory = (id) => {
     dispatch(setCategoryId(id));
@@ -42,7 +48,7 @@ const Home = () => {
     dispatch(setCurrentPage(number));
   };
 
-  React.useEffect(() => {
+  const fetchPizzas = () => {
     setIsLoading(true);
     const sortBy = sort.sortProperty.replace("-", "");
     const order = sort.sortProperty.includes("-") ? "asc" : "desc";
@@ -56,8 +62,47 @@ const Home = () => {
         setItems(res.data);
         setIsLoading(false);
       });
+  };
 
+  //Если изменили параметры и был первый рендер
+  React.useEffect(() => {
+    if (isMounted.current) {
+      const queryString = qs.stringify({
+        sortProperty: sort.sortProperty,
+        categoryId,
+        currentPage,
+      });
+      navigate(`?${queryString}`);
+    }
+    isMounted.current = true;
+  }, [categoryId, sort.sortProperty, currentPage]);
+
+  //Если был первый рендер, то проверяем URL-параметры и сохраняем в Redux
+  React.useEffect(() => {
+    if (window.location.search) {
+      const params = qs.parse(window.location.search.substring(1));
+
+      const sort = nameSort.find(
+        (obj) => obj.sortProperty === params.sortProperty
+      );
+
+      dispatch(
+        setFilters({
+          ...params,
+          sort,
+        })
+      );
+      isSearch.current = true;
+    }
+  }, []);
+  //Если был первый рендер, то запрашиваем пиццы
+  React.useEffect(() => {
     window.scrollTo(0, 0);
+    if (!isSearch.current) {
+      fetchPizzas();
+    }
+
+    isSearch.current = false;
   }, [categoryId, sort.sortProperty, searchValue, currentPage]);
 
   return (
@@ -66,7 +111,7 @@ const Home = () => {
         <Categories value={categoryId} onChangeCategory={onChangeCategory} />
         <Sort />
       </div>
-      <h2 className="content__title">Все пиццы</h2>
+      <h2 className="content__title">All pizzas</h2>
       <div className="content__items">
         {/* {items.map((value) => isLoading ? <Skeleton /> :
 
