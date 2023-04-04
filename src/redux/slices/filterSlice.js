@@ -24,9 +24,20 @@ export const filterSlice = createSlice({
         },
 
         setFilters(state, action) {
-            state.currentPage = Number(action.payload.currentPage)
-            state.sort = action.payload.sort
-            state.categoryId = Number(action.payload.categoryId)
+            if (Object.keys(action.payload).length) {
+                state.currentPage = Number(action.payload.currentPage)
+                state.sort = action.payload.sort
+                state.categoryId = Number(action.payload.categoryId)
+            }
+            else {
+                state.currentPage = 1;
+                state.categoryId = 0;
+                state.sort = {
+                    name: "popularity",
+                    sortProperty: "rating",
+                }
+            }
+
         }
 
 

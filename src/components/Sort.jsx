@@ -12,6 +12,7 @@ export const nameSort = [
 function Sort() {
   const dispatchTypeSort = useDispatch();
   const sortType = useSelector((state) => state.filterSlice.sort);
+  const sortRef = React.useRef(false);
 
   const [isVisible, setIsVisible] = React.useState(false);
 
@@ -20,8 +21,18 @@ function Sort() {
     setIsVisible(false);
   };
 
+  React.useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (!event.composedPath.includes(sortRef.current)) setIsVisible(false);
+
+      document.body.addEventListener("click", handleClickOutside);
+    };
+
+    return () => document.body.removeEventListener("click", handleClickOutside);
+  }, []);
+
   return (
-    <div className="sort">
+    <div className="sort" ref={sortRef}>
       <div className="sort__label">
         <svg
           width="10"
