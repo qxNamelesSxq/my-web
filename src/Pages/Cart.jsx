@@ -2,13 +2,13 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 import { useSelector, useDispatch } from "react-redux";
-import { removeItem, clearItems } from "../redux/slices/cartSlice";
+import { removeItem, clearItems, selectCart } from "../redux/slices/cartSlice";
 import CartItem from "../components/CartItem";
 import CartEmpty from "../components/CartEmpty";
 
 function Cart() {
   const dispatch = useDispatch();
-  const { totalPrice, items } = useSelector((state) => state.cartSlice);
+  const { totalPrice, items } = useSelector(selectCart);
 
   const onClickClear = () => {
     if (window.confirm("Do you want to empty your entire shopping cart?")) {
