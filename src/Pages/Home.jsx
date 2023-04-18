@@ -5,6 +5,7 @@ import Sort, { nameSort } from "../components/Sort";
 import PizzaBlock from "../components/PizzaBlock";
 import Skeleton from "../components/PizzaBlock/Skeleton";
 import Pagination from "../components/Pagination";
+import { Link } from "react-router-dom";
 
 import { useNavigate } from "react-router-dom";
 import { fetchPizzas, selectPizzaData } from "../redux/slices/pizzaSlice";
@@ -19,6 +20,7 @@ import {
   slectFilter,
 } from "../redux/slices/filterSlice";
 import { wait } from "@testing-library/user-event/dist/utils";
+
 const Home = () => {
   const navigate = useNavigate();
 
@@ -41,7 +43,9 @@ const Home = () => {
   };
 
   const renderPizzas = items.map((value) => (
-    <PizzaBlock {...value} key={value.id} />
+    <Link key={value.id} to={`/fullPizza/${value.id}`}>
+      <PizzaBlock {...value} />
+    </Link>
   ));
 
   const skeletons = [...new Array(6)].map((_, index) => (
