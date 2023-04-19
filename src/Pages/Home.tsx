@@ -17,7 +17,7 @@ import {
   setFilters,
   slectFilter,
 } from "../redux/slices/filterSlice";
-const Home = () => {
+const Home:React.FC = () => {
   const navigate = useNavigate();
 
   const dispatch = useDispatch();
@@ -34,19 +34,19 @@ const Home = () => {
 
   // const [items, setItems] = React.useState([]);
 
-  const onChangeCategory = (id) => {
+  const onChangeCategory = (id:number) => {
     dispatch(setCategoryId(id));
   };
 
-  const renderPizzas = items.map((value) => (
+  const renderPizzas = items.map((value:any) => (
     <PizzaBlock key={value.id} {...value} />
   ));
 
   const skeletons = [...new Array(6)].map((_, index) => (
     <Skeleton key={index} />
   ));
-  const onChangePage = (number) => {
-    dispatch(setCurrentPage(number));
+  const onChangePage = (page:number) => {
+    dispatch(setCurrentPage(page));
   };
 
   const getPizzas = async () => {
@@ -56,6 +56,7 @@ const Home = () => {
     const search = searchValue ? `&search=${searchValue}` : "";
 
     dispatch(
+      //@ts-ignore
       fetchPizzas({
         sortBy,
         order,

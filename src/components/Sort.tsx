@@ -1,7 +1,13 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { selectSort, setSort } from "../redux/slices/filterSlice";
-export const nameSort = [
+
+type NameSort= {
+  name:string;
+  sortProperty:string;
+}
+
+export const nameSort:NameSort[] = [
   { name: "popularity (DESC)", sortProperty: "rating" },
   { name: "popularity (ASC)", sortProperty: "-rating" },
   { name: "price (DESC)", sortProperty: "price" },
@@ -9,20 +15,20 @@ export const nameSort = [
   { name: "alphabetically (DESC)", sortProperty: "title" },
   { name: "alphabetically (ASC)", sortProperty: "-title" },
 ];
-function Sort() {
+const Sort:React.FC = () => {
   const dispatchTypeSort = useDispatch();
   const sortType = useSelector(selectSort);
-  const sortRef = React.useRef(false);
+  const sortRef = React.useRef<HTMLDivElement>(null);
 
   const [isVisible, setIsVisible] = React.useState(false);
 
-  const setNameSort = (obj) => {
+  const setNameSort = (obj:NameSort ) => {
     dispatchTypeSort(setSort(obj));
     setIsVisible(false);
   };
 
   React.useEffect(() => {
-    const handleClickOutside = (event) => {
+    const handleClickOutside = (event:any) => {
       if (!event.composedPath.includes(sortRef.current)) setIsVisible(false);
 
       document.body.addEventListener("click", handleClickOutside);
