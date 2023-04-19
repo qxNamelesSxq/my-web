@@ -39,9 +39,7 @@ const Home = () => {
   };
 
   const renderPizzas = items.map((value) => (
-    <Link key={value.id} to={`/fullPizza/${value.id}`}>
-      <PizzaBlock {...value} />
-    </Link>
+    <PizzaBlock key={value.id} {...value} />
   ));
 
   const skeletons = [...new Array(6)].map((_, index) => (
