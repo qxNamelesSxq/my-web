@@ -22,9 +22,11 @@
     "react-redux": "^8.0.5",
     "react-router-dom": "^6.9.0",
     "react-scripts": "5.0.1",
+    "reactjs-stylesheet": "^1.0.9",
     "rsuite": "^5.31.0",
     "sass": "^1.58.3",
     "semantic-ui-react": "^2.1.4",
+    "stylesheet": "^0.9.1",
     "typescript": "^5.0.4",
     "web-vitals": "^2.1.4"
   },

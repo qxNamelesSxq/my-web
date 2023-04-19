@@ -9,8 +9,6 @@ import { Link } from "react-router-dom";
 
 import { useNavigate } from "react-router-dom";
 import { fetchPizzas, selectPizzaData } from "../redux/slices/pizzaSlice";
-import axios from "axios";
-import { selectCart } from "../redux/slices/cartSlice";
 
 import { useSelector, useDispatch } from "react-redux";
 import {
@@ -19,8 +17,6 @@ import {
   setFilters,
   slectFilter,
 } from "../redux/slices/filterSlice";
-import { wait } from "@testing-library/user-event/dist/utils";
-
 const Home = () => {
   const navigate = useNavigate();
 

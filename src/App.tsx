@@ -13,7 +13,7 @@ import MainLayout from './layouts/MainLayout';
 
 
 
-function App() {
+function  App () {
   // console.log(searchValue, 'qwe')
   return (
     <Routes>

@@ -1,5 +1,42 @@
-.root_loading {
-   justify-content: center;
 
-text-align: center;
-}
+.root_loading {
+      justify-content: center;
+    text-align: center;
+      margin: 0 auto;
+    
+    }
+    .container{
+    text-align: center;
+        // background-color:red ;
+     
+        display:flex;
+        padding: 25px;
+ 
+       
+    }
+    .imgFullPizza{
+      width: 300px;
+    
+    }
+    .fullPizzaBody{
+    
+      padding: 20px;
+      flex-direction: column;
+
+    }
+    .titlePizza{
+      font-size: 40px;
+      margin-bottom: 25px;
+    }
+    .bodyPizza{
+      font-size: 25px;
+      margin-bottom: 25px;
+    }
+    .pricePizza{
+      font-weight:700;
+      font-size: 35px;
+    
+    }
+   
+
+   
