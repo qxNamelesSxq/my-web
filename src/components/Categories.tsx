@@ -3,7 +3,7 @@ import React from "react";
 
 type CategoriesProps = {
   value:number;
-  onChangeCategory:any
+  onChangeCategory: (index:number) => void;
 
 }
 
