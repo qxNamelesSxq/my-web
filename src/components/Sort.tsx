@@ -1,6 +1,8 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Sort, SortPropertyEnum, selectSort, setSort } from "../redux/slices/filterSlice";
+import  useWhyDidYouUpdate  from 'ahooks/lib/useWhyDidYouUpdate';
+
 
 type PopupClick = MouseEvent & {
   composedPath:Node[]
@@ -11,6 +13,10 @@ type NameSort= {
   sortProperty:SortPropertyEnum;
 }
 
+type SortPopUpProps ={
+  value:Sort
+}
+
 export const nameSort:NameSort[] = [
   { name: "popularity (DESC)", sortProperty: SortPropertyEnum.RATING_DESC },
   { name: "popularity (ASC)", sortProperty: SortPropertyEnum.RATING_ASC},
@@ -19,9 +25,12 @@ export const nameSort:NameSort[] = [
   { name: "alphabetically (DESC)", sortProperty: SortPropertyEnum.TITLE_DESC},
   { name: "alphabetically (ASC)", sortProperty: SortPropertyEnum.TITLE_ASC},
 ];
-const SortPopUp:React.FC = () => {
+const SortPopUp:React.FC<SortPopUpProps> = React.memo(({value}) => {
+  useWhyDidYouUpdate('SortPopUp',{value})
+
+
   const dispatchTypeSort = useDispatch();
-  const sortType = useSelector(selectSort);
+ 
   const sortRef = React.useRef<HTMLDivElement>(null);
 
   const [isVisible, setIsVisible] = React.useState(false);
@@ -58,7 +67,7 @@ const SortPopUp:React.FC = () => {
           />
         </svg>
         <b>Sorted by:</b>
-        <span onClick={() => setIsVisible(!isVisible)}>{sortType.name}</span>
+        <span onClick={() => setIsVisible(!isVisible)}>{value.name}</span>
       </div>
 
       {/* Условный рендеринг */}
@@ -68,7 +77,7 @@ const SortPopUp:React.FC = () => {
             {nameSort.map((obj, index) => (
               <li
                 className={
-                  sortType.sortProperty === obj.sortProperty ? "active" : ""
+                  value.sortProperty === obj.sortProperty ? "active" : ""
                 }
                 key={index}
                 onClick={() => setNameSort(obj)}
@@ -81,5 +90,5 @@ const SortPopUp:React.FC = () => {
       )}
     </div>
   );
-}
+})
 export default SortPopUp;

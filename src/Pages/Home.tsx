@@ -21,6 +21,7 @@ import {
 import { AppDispatch } from "../redux/store";
 
 
+
 const Home:React.FC = () => {
   const navigate = useNavigate();
 
@@ -37,9 +38,9 @@ const Home:React.FC = () => {
   // const sortType = sort.sortProperty; 
   // const [items, setItems] = React.useState([]);
 
-  const onChangeCategory = (id:number) => {
+  const onChangeCategory =  React.useCallback((id:number) => {
     dispatch(setCategoryId(id));
-  };
+  },[]);
 
   const renderPizzas = items.map((value:any) => (
     <PizzaBlock key={value.id} {...value} />
@@ -125,7 +126,7 @@ const Home:React.FC = () => {
     <div className="container">
       <div className="content__top">
         <Categories value={categoryId} onChangeCategory={onChangeCategory} />
-        <Sort />
+        <Sort value={sort} />
       </div>
       <h2 className="content__title">All pizzas</h2>
 

@@ -1,7 +1,7 @@
 import React from "react";
 import { useDispatch } from "react-redux";
 import { addItem, removeItem, minusItem, CartItem } from "../redux/slices/cartSlice";
-
+import clsx from "clsx";
 
 type CartItemProps = {
   id:string;
@@ -18,15 +18,29 @@ const CartItemBlock:React.FC<CartItemProps>= ({ id, title, price, count, imageUr
   const dispatch = useDispatch();
 
   const onClickPlus = () => {
-    dispatch(
-      addItem({
-        id,
-      } as CartItem )
-    );
+    if(count<20)
+    {
+      dispatch(
+        addItem({
+          id,
+        } as CartItem )
+      );
+    }
+    else{
+      alert('Количество пиццы не может быть больше 20')
+    }
+    
   };
 
   const onClickMinus = () => {
-    dispatch(minusItem(id));
+
+if(count>1){
+  dispatch(minusItem(id));
+}
+else{
+  alert('Количество пиццы не может быть меньше 1')
+}
+
   };
 
   const onClickRemove = () => {
@@ -47,9 +61,12 @@ const CartItemBlock:React.FC<CartItemProps>= ({ id, title, price, count, imageUr
         </p>
       </div>
       <div className="cart__item-count">
-        <div
+        <button
+        disabled = {count === 1}
           onClick={onClickMinus}
-          className="button button--outline button--circle cart__item-count-minus"
+          className='button button--outline button--circle cart__item-count-minus'
+
+          // className={clsx('button button--outline button--circle cart__item-count-minus',{'cart__item-count-minus-disabled':count===1})}
         >
           <svg
             width="10"
@@ -67,9 +84,10 @@ const CartItemBlock:React.FC<CartItemProps>= ({ id, title, price, count, imageUr
               fill="#EB5A1E"
             />
           </svg>
-        </div>
+        </button>
         <b>{count}</b>
-        <div
+        <button
+          disabled = {count === 20}
           onClick={onClickPlus}
           className="button button--outline button--circle cart__item-count-plus"
         >
@@ -89,7 +107,7 @@ const CartItemBlock:React.FC<CartItemProps>= ({ id, title, price, count, imageUr
               fill="#EB5A1E"
             />
           </svg>
-        </div>
+        </button>
       </div>
       <div className="cart__item-price">
         <b>{price * count}$</b>
